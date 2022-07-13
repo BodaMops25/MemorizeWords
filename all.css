@@ -1,0 +1,14 @@
+* {box-sizing: border-box}
+a {text-decoration: none}
+
+a.button {
+  font-size: 36px;
+  transition: .1s;
+}
+a.button:hover {opacity: .7}
+
+a.button.top-rigth {
+  top: 15px;
+  right: 15px;
+  position: absolute;
+}

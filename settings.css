@@ -1,0 +1,35 @@
+.content .content-item {
+  max-width: 25rem;
+  border-bottom: 2px solid;
+  padding-bottom: 5px;
+}
+.content .content-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.field {margin-bottom: 15px}
+.field > * {display: block}
+.field label {margin-bottom: 5px}
+
+.access .field input {width: 25rem}
+
+.reminder-time fieldset {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.reminder-time fieldset > * {flex-shrink: 0}
+.reminder-time .field {margin-right: 10px}
+.reminder-time .field > * {display: inline}
+.reminder-time .field input {width: 6rem}
+
+.props-id .field input {width: 6rem}
+
+.default-button {
+  width: 7.5rem;
+  height: 2rem;
+}
+
+button.save {margin-top: 20px}

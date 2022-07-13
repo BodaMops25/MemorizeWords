@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="all.css">
+  <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+
+  <a href="index.html" class="button top-rigth">❌</a>
+
+  <h1>Memorize Words App</h1>
+  <p>Developer mode</p>
+
+  <div class="content">
+
+    <div class="content-item access">
+      <h3>Access settings *</h3>
+      <div class="field">
+        <label for="integrationToken">Integration Token</label>
+        <input id="integrationToken" type="text" placeholder="secret_dBggqR0ogeVdA65iznmErSeaoExTHiZBM2gvVhkoPOg">
+      </div>
+    
+      <div class="field">
+        <label for="databaseId">Database Id</label>
+        <input id="databaseId" type="text" placeholder="6r11b8CeFd4643b2324a579a644F74d4">
+      </div>
+    </div>
+  
+    <div class="content-item props-id">
+      <h3>Properity identificator settings *</h3>
+      <div class="field">
+        <label for="prop_title">Title</label>
+        <input id="prop_title" type="text" placeholder="title">
+      </div>
+    
+      <div class="field">
+        <label for="prop_eng">English translate</label>
+        <input id="prop_eng" type="text" placeholder="Ye%6B%7F">
+      </div>
+  
+      <div class="field">
+        <label for="prop_data">Data</label>
+        <input id="prop_data" type="text" placeholder="Ye%6B%7F">
+      </div>
+    </div>
+  
+    <div class="content-item reminder-time">
+      <h3>Reminder time settings</h3>
+      <fieldset>
+        <legend>Level - in days measuring</legend>
+  
+        <div class="field">
+          <label for="rtl0">0:</label>
+          <input type="number" id="rtl0" placeholder="1">
+        </div>
+  
+        <div class="field">
+          <label for="rtl1">1:</label>
+          <input type="number" id="rtl1" placeholder="3">
+        </div>
+  
+        <div class="field">
+          <label for="rtl2">2:</label>
+          <input type="number" id="rtl2" placeholder="6">
+        </div>
+  
+        <div class="field">
+          <label for="rtl3">3:</label>
+          <input type="number" id="rtl3" placeholder="12">
+        </div>
+  
+        <div class="field">
+          <label for="rtl4">4:</label>
+          <input type="number" id="rtl4" placeholder="24">
+        </div>
+  
+        <div class="field">
+          <label for="rtl5">5:</label>
+          <input type="number" id="rtl5" placeholder="48">
+        </div>
+  
+        <div class="field">
+          <label for="rtl6">6:</label>
+          <input type="number" id="rtl6" placeholder="96">
+        </div>
+  
+        <div class="field">
+          <label for="rtl7">7:</label>
+          <input type="number" id="rtl7" placeholder="192">
+        </div>
+  
+        <div class="field">
+          <label for="rtl8">8:</label>
+          <input type="number" id="rtl8" placeholder="384">
+        </div>
+  
+        <div class="field">
+          <label for="rtl9">9:</label>
+          <input type="number" id="rtl9" placeholder="768">
+        </div>
+  
+        <button class="default-button reset">Reset</button>
+      </fieldset>
+    </div>
+
+  </div>
+
+  <button class="default-button save">Save</button>
+
+  <script src="savad_data.js"></script>
+  <script src="settings.js"></script>
+</body>
+</html>
