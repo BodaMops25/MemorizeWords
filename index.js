@@ -46,4 +46,4 @@ getItems().then(async arr => {
 
   return itemsData
 })
-.then(console.log)
+.then(r => console.log('Receive data finished:', r), err => console.log(err))
