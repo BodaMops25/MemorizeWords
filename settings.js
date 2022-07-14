@@ -1,7 +1,3 @@
-function getNode(selector) {
-  return document.querySelector(selector)
-}
-
 const nodes = {
   access: {
     integrationToken: getNode('input#integrationToken'),

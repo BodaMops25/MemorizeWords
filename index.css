@@ -1,0 +1,37 @@
+.opacity0 {opacity: 0}
+
+.word-content {
+  max-width: 25rem;
+  transition: .5s;
+}
+
+.word-item {margin-bottom: 15px;}
+
+.word-item label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.word-variants button,
+.word-variants .field {margin-bottom: 5px}
+
+.word-variants button.check-word-variants {margin-bottom: 0}
+
+.word-variants label {display: inline}
+
+.word-variants-content {visibility: hidden}
+.word-variants-content.shown {visibility: visible;}
+
+.memorize-quality {width: 10rem}
+.memorize-quality p {margin: 0}
+.memorize-quality input {width: 100%}
+
+.memorize-quality .range-numbers {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  position: relative;
+  left: 3px;
+}
+
+.memorize-quality .range-numbers p {width: 20px}

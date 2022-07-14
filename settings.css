@@ -12,7 +12,10 @@
 .field > * {display: block}
 .field label {margin-bottom: 5px}
 
-.access .field input {width: 25rem}
+.access .field input {
+  max-width: 25rem;
+  width: 100%;
+}
 
 .reminder-time fieldset {
   padding-top: 10px;

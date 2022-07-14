@@ -1,3 +1,7 @@
+function getNode(selector) {
+  return document.querySelector(selector)
+}
+
 const [ls_access_data, ls_props] = ['access-data', 'props'].map(itm => JSON.parse(localStorage.getItem(itm) || '{}')),
       reminder_def_levels = [1, 3, 6, 12, 24, 48, 96, 192, 384, 768],
       ls_reminder_time = JSON.parse(localStorage.getItem('reminder-time') || JSON.stringify(reminder_def_levels))

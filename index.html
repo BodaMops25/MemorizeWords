@@ -16,10 +16,62 @@
   <p>Developer mode</p>
 
   <h3>Words</h3>
-  <p>content</p>
+
+  <fieldset class="word-content">
+    <legend>Word</legend>
+    <h3 class="word-title">Word</h3>
+    <pre>// if sweden word, we can check spelling</pre>
+
+    <div class="word-item check-spelling">
+      <label for="check_spelling">Check spelling</label>
+      <input id="check_spelling" type="text" placeholder="word">
+      <button class="check-spelling">Check</button>
+    </div>
+
+    <div class="word-item word-variants">
+      <button onclick="getNode('.word-variants-content').classList.add('shown')">Show word variants</button>
+
+      <div class="word-variants-content">
+        <div class="field">
+          <input id="word_radio_1" type="radio" name="word_radio" value="false">
+          <label for="word_radio_1">Word variant 1</label>
+        </div>
+
+        <div class="field">
+          <input id="word_radio_2" type="radio" name="word_radio" value="false">
+          <label for="word_radio_2">Word variant 2</label>
+        </div>
+
+        <div class="field">
+          <input id="word_radio_3" type="radio" name="word_radio" value="false">
+          <label for="word_radio_3">Word variant 3</label>
+        </div>
+
+        <div class="field">
+          <input id="word_radio_4" type="radio" name="word_radio" value="false">
+          <label for="word_radio_4">Word variant 4</label>
+        </div>
+
+        <button class="check-word-variants">Check</button>
+      </div>
+    </div>
+
+    <div class="word-item memorize-quality">
+      <label for="memorize_quality">Memorize quality</label>
+      <input id="memorize_quality" type="range" min="1" max="3" value="2">
+      <div class="range-numbers">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+      </div>
+    </div>
+
+    <button class="save-next">Save & Next</button>
+
+  </fieldset>
 
   <script src="https://fetch-machine.herokuapp.com/fetchMachineClient.js"></script>
-  <script src="savad_data.js"></script>
+  <script src="core.js"></script>
   <script src="index.js"></script>
 </body>
 </html>
