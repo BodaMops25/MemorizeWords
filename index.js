@@ -30,12 +30,19 @@ const words = [],
       propsData[key] = await FM_makeFetch('https://api.notion.com/v1/pages/' + itm.id + '/properties/' + ls_props[key], {headers: NF_headers})
       .then(r => r.text())
       .then(r => {
-        r = JSON.parse(r).results[0]
-        return r ? r[r.type].text.content : ''
+        r = JSON.parse(r)
+        if(r.type !== 'date') {
+          r = r.results[0]
+          return r ? r[r.type].text.content : ''
+        }
+        return r.date
       })
     }
+    if(propsData.data) {
+      propsData.data = JSON.parse(propsData.data)
+      propsData.data.invokeDate = new Date(propsData.data.invokeDate)
+    }
     propsData.id = itm.id
-    propsData.data = JSON.parse(propsData.data || '{}')
   }
 
   return words
@@ -44,6 +51,24 @@ const words = [],
   console.log('Receive data finished:', r)
   return r
 }, err => console.log('Error geting items from notion database:', err))
+
+// ASYNC QUEUE
+
+const asyncQueue = {
+  queue: [],
+  isProcessed: false,
+  addItem(asyncFunc, params = []) {
+    this.queue.push([asyncFunc, params])
+    if(!this.isProcessed) this.processQueue()
+  },
+  async processQueue() {
+    this.isProcessed = true
+    const [asyFunc, params] = this.queue.pop()
+    await asyFunc(...params)
+    if(this.queue.length) await this.processQueue()
+    this.isProcessed = false
+  }
+}
 
 // WORDS
 
@@ -110,6 +135,40 @@ function setWord(wordsArr, num) {
 
   nodes.saveNext.onclick = () => {
     if(!words[num+1]) return
+    if(!word.data) word.data = {memorizeLevel: 0}
+    
+    word.data.memorizeQuality = +nodes.memorizeQuality.value
+    word.data.invokeDate = new Date()
+
+    if(word.data.memorizeQuality === 1 && word.data.memorizeLevel > 0) word.data.memorizeLevel--
+    if(word.data.memorizeQuality === 3 && word.data.memorizeLevel < 9) word.data.memorizeLevel++
+
+    word.nextInvokeDate = new Date(+word.data.invokeDate + ls_reminder_time[word.data.memorizeLevel] * 24 * 3600 * 1000)
+
+    asyncQueue.addItem(FM_makeFetch, [
+        'https://api.notion.com/v1/pages/' + word.id,
+        {
+          method: 'PATCH',
+          headers: NF_headers,
+          body: JSON.stringify({
+            properties: {
+              [ls_props.data]: {
+                rich_text: [{
+                  type: 'text',
+                  text: {content: JSON.stringify(word.data)}
+                }]
+              },
+              [ls_props.nextInvokeDate]: {
+                date: {
+                  start: new Date(+word.nextInvokeDate + 2 * 3600 * 1000),
+                  time_zone: 'Europe/Stockholm'
+                }
+              }
+            }
+          })
+        }
+      ]
+    )
     
     console.log('Word pref saved')
 

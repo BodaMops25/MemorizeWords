@@ -7,6 +7,7 @@ const nodes = {
     title: getNode('input#prop_title'),
     eng: getNode('input#prop_eng'),
     data: getNode('input#prop_data'),
+    nextInvokeDate: getNode('input#prop_nextInvokeDate')
   },
   reminder_time: {
     levels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(itm => getNode('input#rtl' + itm)),
