@@ -12,3 +12,8 @@ a.button.top-rigth {
   right: 15px;
   position: absolute;
 }
+
+.default-button {
+  width: 7.5rem;
+  height: 2rem;
+}

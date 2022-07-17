@@ -17,7 +17,36 @@
 
   <h3>Words</h3>
 
-  <fieldset class="word-content">
+  <fieldset class="word-content loading-bar">
+    <legend>Word</legend>
+    <h4 class="loading-node">Loading ...</h4>
+    <p>Loaded words: <span class="loaded-words-num">0</span></p>
+  </fieldset>
+  <script>
+    function LoadingBar(parentSelector, loadingSelector) {
+      this.counter = 3
+      this.parent = document.querySelector(parentSelector)
+      this.node = this.parent.querySelector(loadingSelector)
+      this.interval = setInterval(() => {
+        if(this.counter > 2) {
+          this.node.innerHTML = 'Loading '
+          this.counter = 0
+        }
+        else {
+          this.node.innerHTML += '.'
+          this.counter++
+        }
+      }, 500)
+      this.remove = () => {
+        clearInterval(this.loadingInterval)
+        this.parent.remove()
+      }
+    }
+
+    const loadingBar = new LoadingBar('.loading-bar', '.loading-node')
+  </script>
+
+  <fieldset class="word-content word-card opacity0" style="display: none">
     <legend>Word</legend>
     <h3 class="word-title">Word</h3>
     <pre>// if sweden word, we can check spelling</pre>
@@ -68,6 +97,12 @@
 
     <button class="save-next">Save & Next</button>
 
+  </fieldset>
+
+  <fieldset class="word-content finish-content opacity0" style="display: none">
+    <legend>Word</legend>
+    <h3>All words processed</h3>
+    <button class="default-button" onclick="location.reload()">More</button>
   </fieldset>
 
   <script src="https://fetch-machine.herokuapp.com/fetchMachineClient.js"></script>
