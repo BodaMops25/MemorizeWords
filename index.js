@@ -81,7 +81,7 @@ const words = [],
   return words
 })
 .then(r => {
-  console.log('Receive data finished:', r)
+  // console.log('Receive data finished:', r)
   return r
 }, err => console.log('Error geting items from notion database:', err))
 

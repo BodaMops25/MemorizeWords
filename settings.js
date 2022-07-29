@@ -10,7 +10,7 @@ const nodes = {
     nextInvokeDate: getNode('input#prop_nextInvokeDate')
   },
   reminder_time: {
-    levels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(itm => getNode('input#rtl' + itm)),
+    levels: ls_reminder_time.map((itm, i) => getNode('input#rtl' + i)),
     reset_button: getNode('.reminder-time button.default-button.reset')
   },
   app_settings: {
