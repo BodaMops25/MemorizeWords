@@ -127,26 +127,32 @@ const nodes = {
 }
 
 nodes.checkSpelling.checkButton.onclick = () => {
-  const inWord = nodes.checkSpelling.input.value,
-        controlWord = curWord.title
+  const inWord = nodes.checkSpelling.input.value.toLowerCase(),
+        controlWord = curWord.title.toLowerCase()
+
+  nodes.checkSpelling.input.classList.remove('passed')
+  nodes.checkSpelling.input.classList.remove('not-passed')
 
   // NEED MAKE NORMAL FUNCTION OF EQUALATION WORDS
-  if(controlWord.toLowerCase().replace('en ', '').replace('ett ', '') === inWord.toLowerCase()) {
-    alert('ok')
+  if(controlWord.replace('en ', '').replace('ett ', '') === inWord) {
+    nodes.checkSpelling.input.classList.add('passed')
     nodes.memorizeQuality.value = 3
   }
   else {
-    alert('not ok')
+    nodes.checkSpelling.input.classList.add('not-passed')
     nodes.memorizeQuality.value = 2
   }
 }
 
 nodes.wordVariants.checkButton.onclick = () => {
+  getNode('.word-variants-content .check-indicator span:first-child').style.display = ''
+  getNode('.word-variants-content .check-indicator span:last-child').style.display = ''
+
   if(JSON.parse(nodes.wordVariants.fields.find(itm => itm.checkbox.checked)?.checkbox.value || 'false')) {
-    alert('ok')
+    getNode('.word-variants-content .check-indicator span:first-child').style.display = 'inline'
     if(nodes.memorizeQuality.value < 2) nodes.memorizeQuality.value = 2
   }
-  else alert('not ok')
+  else getNode('.word-variants-content .check-indicator span:last-child').style.display = 'inline'
 }
 
 nodes.saveNext.onclick = () => {
@@ -217,20 +223,33 @@ function setWord(wordsArr, num) {
     console.log('Item not exist!')
     return
   }
+
+  nodes.mainBlock.querySelector('legend').innerHTML = 'Word - ' + (num+1) + '/' + ls_app_settings.wordsPerDay
+
+  getNode('.word-variants-content').classList.remove('shown')
+
+  nodes.checkSpelling.input.classList.remove('passed')
+  nodes.checkSpelling.input.classList.remove('not-passed')
+  nodes.checkSpelling.input.value = ''
+  getNode('.word-variants-content .check-indicator span:first-child').style.display = ''
+  getNode('.word-variants-content .check-indicator span:last-child').style.display = ''
+  document.querySelectorAll('input[name="word_radio"]').forEach(itm => itm.checked = 0)
   
   curWord = wordsArr[num],
   curWordNum = num
 
-  nodes.word.innerText = curWord.eng
+  const engToSw = Math.round(Math.random() * 2)
+
+  nodes.word.innerText = curWord[engToSw ? 'eng' : 'title']
 
   nodes.wordVariants.fields.forEach(({checkbox, label}) => {
     checkbox.value = false
-    label.innerText = wordsArr[Math.floor(Math.random()*wordsArr.length)].title
+    label.innerText = wordsArr[Math.floor(Math.random()*wordsArr.length)][engToSw ? 'title' : 'eng']
   })
 
   const {checkbox, label} = nodes.wordVariants.fields[Math.floor(Math.random()*nodes.wordVariants.fields.length)]
   checkbox.value = true
-  label.innerText = curWord.title
+  label.innerText = curWord[engToSw ? 'title' : 'eng']
 }
 
 
