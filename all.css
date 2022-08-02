@@ -1,6 +1,11 @@
 * {box-sizing: border-box}
 a {text-decoration: none}
 
+body {
+  max-width: 26rem;
+  margin: 0 auto;
+}
+
 a.button {
   font-size: 36px;
   transition: .1s;

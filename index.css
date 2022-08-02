@@ -12,19 +12,7 @@
   margin-bottom: 5px;
 }
 
-.passed {
-  background-color: #8eff8e;
-  border: 1px solid rgba(0, 0, 0, .48);
-  border-radius: 2px;
-  padding: 2px auto;
-}
-
-.not-passed {
-  background-color: #ff8e8e;
-  border: 1px solid rgba(0, 0, 0, .48);
-  border-radius: 2px;
-  padding: 2px auto;
-}
+.check-spelling-button {margin-top: 5px}
 
 .word-variants button,
 .word-variants .field {margin-bottom: 5px}
@@ -36,8 +24,8 @@
 .word-variants-content {visibility: hidden}
 .word-variants-content.shown {visibility: visible;}
 
-.word-variants-content .check-indicator {display: inline}
-.word-variants-content .check-indicator > *{display: none}
+.check-indicator {display: inline}
+.check-indicator > *{display: none}
 
 .memorize-quality {width: 10rem}
 .memorize-quality p {margin: 0}

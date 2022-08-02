@@ -39,7 +39,8 @@ async function getItems(amount, cursor) {
 }
 
 let curWord = null,
-    curWordNum = 0
+    curWordNum = 0,
+    engToSw = 0
 
 const words = [],
       wordsPromise = getItems(+ls_app_settings.wordsPerDay).then(async arr => {
@@ -109,42 +110,45 @@ const nodes = {
   mainBlock: getNode('fieldset.word-content.word-card'),
   word: getNode('h3.word-title'),
   checkSpelling: {
-    input: getNode('input#check_spelling'),
-    checkButton: getNode('button.check-spelling')
+    form: getNode('form.word-item.check-spelling'),
+    input: getNode('input#check_spelling')
   },
   wordVariants: {
+    form: getNode('form.word-variants-content'),
     fields: [1, 2, 3, 4].map(itm => {
       return {
         checkbox: getNode('input#word_radio_' + itm),
         label: getNode('label[for="word_radio_' + itm + '"]')
       }
-    }),
-    checkButton: getNode('button.check-word-variants')
+    })
   },
   memorizeQuality: getNode('input#memorize_quality'),
   saveNext: getNode('.save-next'),
   finishBlock: getNode('fieldset.finish-content')
 }
 
-nodes.checkSpelling.checkButton.onclick = () => {
+nodes.checkSpelling.form.onsubmit = e => {
+  e.preventDefault()
   const inWord = nodes.checkSpelling.input.value.toLowerCase(),
-        controlWord = curWord.title.toLowerCase()
+        controlWord = curWord[engToSw ? 'title' : 'eng'].toLowerCase()
 
-  nodes.checkSpelling.input.classList.remove('passed')
-  nodes.checkSpelling.input.classList.remove('not-passed')
+  nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = ''
+  nodes.checkSpelling.form.querySelector('.check-indicator > span:last-child').style.display = ''
 
   // NEED MAKE NORMAL FUNCTION OF EQUALATION WORDS
   if(controlWord.replace('en ', '').replace('ett ', '') === inWord) {
-    nodes.checkSpelling.input.classList.add('passed')
+    nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = 'inline'
     nodes.memorizeQuality.value = 3
   }
   else {
-    nodes.checkSpelling.input.classList.add('not-passed')
+    nodes.checkSpelling.form.querySelector('.check-indicator > span:last-child').style.display = 'inline'
     nodes.memorizeQuality.value = 2
   }
 }
 
-nodes.wordVariants.checkButton.onclick = () => {
+nodes.wordVariants.form.onsubmit = e => {
+  e.preventDefault()
+  
   getNode('.word-variants-content .check-indicator span:first-child').style.display = ''
   getNode('.word-variants-content .check-indicator span:last-child').style.display = ''
 
@@ -228,8 +232,8 @@ function setWord(wordsArr, num) {
 
   getNode('.word-variants-content').classList.remove('shown')
 
-  nodes.checkSpelling.input.classList.remove('passed')
-  nodes.checkSpelling.input.classList.remove('not-passed')
+  nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = ''
+  nodes.checkSpelling.form.querySelector('.check-indicator > span:last-child').style.display = ''
   nodes.checkSpelling.input.value = ''
   getNode('.word-variants-content .check-indicator span:first-child').style.display = ''
   getNode('.word-variants-content .check-indicator span:last-child').style.display = ''
@@ -237,8 +241,7 @@ function setWord(wordsArr, num) {
   
   curWord = wordsArr[num],
   curWordNum = num
-
-  const engToSw = Math.round(Math.random() * 2)
+  engToSw = Math.round(Math.random() * 2)
 
   nodes.word.innerText = curWord[engToSw ? 'eng' : 'title']
 

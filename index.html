@@ -49,16 +49,21 @@
     <legend>Word</legend>
     <h3 class="word-title">Word</h3>
 
-    <div class="word-item check-spelling">
+    <form class="word-item check-spelling">
       <label for="check_spelling">Check spelling</label>
       <input id="check_spelling" type="text" placeholder="word">
-      <button class="check-spelling">Check</button>
-    </div>
+      <br>
+      <button type="submit" class="check-spelling-button">Check</button>
+      <p class="check-indicator">
+        <span>✅</span>
+        <span>❌</span>
+      </p>
+    </form>
 
     <div class="word-item word-variants">
       <button onclick="getNode('.word-variants-content').classList.add('shown')">Show word variants</button>
 
-      <div class="word-variants-content">
+      <form class="word-variants-content">
         <div class="field">
           <input id="word_radio_1" type="radio" name="word_radio" value="false">
           <label for="word_radio_1">Word variant 1</label>
@@ -79,13 +84,13 @@
           <label for="word_radio_4">Word variant 4</label>
         </div>
 
-        <button class="check-word-variants">Check</button>
+        <button type="submit" class="check-word-variants">Check</button>
         <p class="check-indicator">
           <span>✅</span>
           <span>❌</span>
         </p>
-      </div>
-    </div>
+      </form>
+    </form>
 
     <div class="word-item memorize-quality">
       <label for="memorize_quality">Memorize quality</label>
