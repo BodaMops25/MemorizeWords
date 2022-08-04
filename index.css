@@ -1,3 +1,6 @@
+body .chk-btn {display: none}
+body.shown-checks .chk-btn {display: unset}
+
 .opacity0 {opacity: 0}
 
 .word-content {
@@ -16,8 +19,6 @@
 
 .word-variants button,
 .word-variants .field {margin-bottom: 5px}
-
-.word-variants button.check-word-variants {margin-bottom: 0}
 
 .word-variants label {display: inline}
 

@@ -52,16 +52,21 @@
     <form class="word-item check-spelling">
       <label for="check_spelling">Check spelling</label>
       <input id="check_spelling" type="text" placeholder="word">
-      <br>
-      <button type="submit" class="check-spelling-button">Check</button>
       <p class="check-indicator">
         <span>✅</span>
         <span>❌</span>
       </p>
+      <br class="chk-btn">
+      <button type="submit" class="check-spelling-button chk-btn">Check</button>
     </form>
 
     <div class="word-item word-variants">
       <button onclick="getNode('.word-variants-content').classList.add('shown')">Show word variants</button>
+
+      <p class="check-indicator">
+        <span>✅</span>
+        <span>❌</span>
+      </p>
 
       <form class="word-variants-content">
         <div class="field">
@@ -84,13 +89,9 @@
           <label for="word_radio_4">Word variant 4</label>
         </div>
 
-        <button type="submit" class="check-word-variants">Check</button>
-        <p class="check-indicator">
-          <span>✅</span>
-          <span>❌</span>
-        </p>
+        <button type="submit" class="check-word-variants chk-btn">Check</button>
       </form>
-    </form>
+    </div>
 
     <div class="word-item memorize-quality">
       <label for="memorize_quality">Memorize quality</label>
@@ -109,7 +110,7 @@
   <fieldset class="word-content finish-content opacity0" style="display: none">
     <legend>Word</legend>
     <h3>All words processed</h3>
-    <button class="default-button" onclick="location.reload()">More</button>
+    <a href="" class="default-button">More</a>
   </fieldset>
 
   <script src="https://fetch-machine.herokuapp.com/fetchMachineClient.js"></script>

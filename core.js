@@ -12,6 +12,7 @@ if(!ls_access_data.databaseId) ls_access_data.databaseId = prompt('Database id n
 
 if(!ls_app_settings.wordsPerDay) ls_app_settings.wordsPerDay = 30
 if(!ls_app_settings.startCachedWords) ls_app_settings.startCachedWords = 5
+if(!ls_app_settings.showCheckButtons) ls_app_settings.showCheckButtons = 0
 
 localStorage.setItem('access-data', JSON.stringify(ls_access_data))
 localStorage.setItem('reminder-time', JSON.stringify(ls_reminder_time))

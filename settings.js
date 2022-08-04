@@ -16,6 +16,7 @@ const nodes = {
   app_settings: {
     wordsPerDay: getNode('input#wordsPerDay'),
     startCachedWords: getNode('input#startCachedWords'),
+    showCheckButtons: getNode('input#showCheckButtons')
   },
   save_button: getNode('button.default-button.save')
 }
@@ -24,7 +25,11 @@ function init() {
   ['integrationToken', 'databaseId'].forEach(itm => nodes.access[itm].value = ls_access_data[itm])
   for(const key in ls_props) nodes.props[key].value = ls_props[key]
   ls_reminder_time.forEach((itm, i, arr) => nodes.reminder_time.levels[i].value = itm)
-  for(const key in ls_app_settings) nodes.app_settings[key].value = ls_app_settings[key]
+  for(const key in ls_app_settings) {
+    const inpt = nodes.app_settings[key]
+    if(inpt.type === 'checkbox') inpt.checked = ls_app_settings[key]
+    else inpt.value = ls_app_settings[key]
+  }
 }
 init()
 
@@ -32,7 +37,11 @@ function saveData() {
   ['integrationToken', 'databaseId'].forEach(itm => ls_access_data[itm] = nodes.access[itm].value)
   for(const key in nodes.props) ls_props[key] = nodes.props[key].value
   ls_reminder_time.forEach((itm, i, arr) => arr[i] = nodes.reminder_time.levels[i].value)
-  for(const key in ls_app_settings) ls_app_settings[key] = nodes.app_settings[key].value
+  for(const key in ls_app_settings) {
+    const inpt = nodes.app_settings[key]
+    if(inpt.type === 'checkbox') ls_app_settings[key] = inpt.checked
+    else ls_app_settings[key] = inpt.value
+  }
 
   localStorage.setItem('access-data', JSON.stringify(ls_access_data))
   localStorage.setItem('props', JSON.stringify(ls_props))

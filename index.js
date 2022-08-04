@@ -1,3 +1,5 @@
+if(ls_app_settings.showCheckButtons) document.body.classList.add('shown-checks')
+
 const {integrationToken, databaseId} = ls_access_data,
       NF_headers = {
         'Authorization': 'Bearer ' + integrationToken,
@@ -58,8 +60,7 @@ const words = [],
       .then(r => {
         r = JSON.parse(r)
         if(r.type !== 'date') {
-          r = r.results[0]
-          return r ? r[r.type].text.content : ''
+          return r.results.reduce((str, itm) => str += itm[itm.type].text.content, '')
         }
         return r.date
       })
@@ -149,14 +150,17 @@ nodes.checkSpelling.form.onsubmit = e => {
 nodes.wordVariants.form.onsubmit = e => {
   e.preventDefault()
   
-  getNode('.word-variants-content .check-indicator span:first-child').style.display = ''
-  getNode('.word-variants-content .check-indicator span:last-child').style.display = ''
+  getNode('.word-item.word-variants .check-indicator span:first-child').style.display = ''
+  getNode('.word-item.word-variants .check-indicator span:last-child').style.display = ''
 
   if(JSON.parse(nodes.wordVariants.fields.find(itm => itm.checkbox.checked)?.checkbox.value || 'false')) {
-    getNode('.word-variants-content .check-indicator span:first-child').style.display = 'inline'
-    if(nodes.memorizeQuality.value < 2) nodes.memorizeQuality.value = 2
+    getNode('.word-item.word-variants .check-indicator span:first-child').style.display = 'inline'
+    nodes.memorizeQuality.value = 2
   }
-  else getNode('.word-variants-content .check-indicator span:last-child').style.display = 'inline'
+  else {
+    getNode('.word-item.word-variants .check-indicator span:last-child').style.display = 'inline'
+    nodes.memorizeQuality.value = 1
+  }
 }
 
 nodes.saveNext.onclick = () => {
@@ -235,8 +239,8 @@ function setWord(wordsArr, num) {
   nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = ''
   nodes.checkSpelling.form.querySelector('.check-indicator > span:last-child').style.display = ''
   nodes.checkSpelling.input.value = ''
-  getNode('.word-variants-content .check-indicator span:first-child').style.display = ''
-  getNode('.word-variants-content .check-indicator span:last-child').style.display = ''
+  getNode('.word-item.word-variants .check-indicator span:first-child').style.display = ''
+  getNode('.word-item.word-variants .check-indicator span:last-child').style.display = ''
   document.querySelectorAll('input[name="word_radio"]').forEach(itm => itm.checked = 0)
   
   curWord = wordsArr[num],
@@ -244,15 +248,23 @@ function setWord(wordsArr, num) {
   engToSw = Math.round(Math.random() * 2)
 
   nodes.word.innerText = curWord[engToSw ? 'eng' : 'title']
+  
+  rndNumsArr = []
 
-  nodes.wordVariants.fields.forEach(({checkbox, label}) => {
-    checkbox.value = false
-    label.innerText = wordsArr[Math.floor(Math.random()*wordsArr.length)][engToSw ? 'title' : 'eng']
+  for(let i = 0; i < 4; i++) {
+    let rnd = Math.floor(Math.random() * wordsArr.length)
+    while(rndNumsArr.includes(rnd) && wordsArr.length > 3) {
+      rnd = Math.floor(Math.random() * wordsArr.length)
+    }
+    rndNumsArr.push(rnd)
+  }
+
+  if(!rndNumsArr.includes(curWordNum)) rndNumsArr[Math.floor(Math.random() * 4)] = curWordNum
+
+  nodes.wordVariants.fields.forEach(({checkbox, label}, i) => {
+    checkbox.value = rndNumsArr[i] === curWordNum
+    label.innerText = wordsArr[rndNumsArr[i]][engToSw ? 'title' : 'eng']
   })
-
-  const {checkbox, label} = nodes.wordVariants.fields[Math.floor(Math.random()*nodes.wordVariants.fields.length)]
-  checkbox.value = true
-  label.innerText = curWord[engToSw ? 'title' : 'eng']
 }
 
 
