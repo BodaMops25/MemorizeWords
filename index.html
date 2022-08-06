@@ -51,7 +51,7 @@
 
     <form class="word-item check-spelling">
       <label for="check_spelling">Check spelling</label>
-      <input id="check_spelling" type="text" placeholder="word">
+      <input id="check_spelling" type="text" placeholder="word" autocomplete="off">
       <p class="check-indicator">
         <span>✅</span>
         <span>❌</span>
@@ -110,7 +110,9 @@
   <fieldset class="word-content finish-content opacity0" style="display: none">
     <legend>Word</legend>
     <h3>All words processed</h3>
-    <a href="" class="default-button">More</a>
+    <a href="">
+      <button class="default-button">More</button>
+    </a>
   </fieldset>
 
   <script src="https://fetch-machine.herokuapp.com/fetchMachineClient.js"></script>

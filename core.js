@@ -10,9 +10,10 @@ const [ls_access_data, ls_props] = ['access-data', 'props'].map(itm => JSON.pars
 if(!ls_access_data.integrationToken) ls_access_data.integrationToken = prompt('Integration token not found, write new token here')
 if(!ls_access_data.databaseId) ls_access_data.databaseId = prompt('Database id not found, write new id here')
 
-if(!ls_app_settings.wordsPerDay) ls_app_settings.wordsPerDay = 30
-if(!ls_app_settings.startCachedWords) ls_app_settings.startCachedWords = 5
-if(!ls_app_settings.showCheckButtons) ls_app_settings.showCheckButtons = 0
+if(!ls_app_settings.wordsPerDay && +ls_app_settings.wordsPerDay !== 0) ls_app_settings.wordsPerDay = 30
+if(!ls_app_settings.startCachedWords && +ls_app_settings.startCachedWords !== 0) ls_app_settings.startCachedWords = 5
+if(!ls_app_settings.showCheckButtons && +ls_app_settings.showCheckButtons !== 0) ls_app_settings.showCheckButtons = 0
+if(!ls_app_settings.randomizeWordSequence && +ls_app_settings.randomizeWordSequence !== 0) ls_app_settings.randomizeWordSequence = 1
 
 localStorage.setItem('access-data', JSON.stringify(ls_access_data))
 localStorage.setItem('reminder-time', JSON.stringify(ls_reminder_time))

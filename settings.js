@@ -16,7 +16,8 @@ const nodes = {
   app_settings: {
     wordsPerDay: getNode('input#wordsPerDay'),
     startCachedWords: getNode('input#startCachedWords'),
-    showCheckButtons: getNode('input#showCheckButtons')
+    showCheckButtons: getNode('input#showCheckButtons'),
+    randomizeWordSequence: getNode('input#randomizeWordSequence')
   },
   save_button: getNode('button.default-button.save')
 }

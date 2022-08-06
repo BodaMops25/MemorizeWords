@@ -45,6 +45,7 @@ let curWord = null,
     engToSw = 0
 
 const words = [],
+      usedWordsNums = [],
       wordsPromise = getItems(+ls_app_settings.wordsPerDay).then(async arr => {
 
   for(let i = 0; i < arr.length; i++) {
@@ -76,7 +77,7 @@ const words = [],
 
     if(i === +ls_app_settings.startCachedWords) {
       initWords()
-      setWord(words, 0)
+      setWord(words, ls_app_settings.randomizeWordSequence ? rndWord() : 0)
     }
   }
 
@@ -86,6 +87,18 @@ const words = [],
   // console.log('Receive data finished:', r)
   return r
 }, err => console.log('Error geting items from notion database:', err))
+
+function rndWord() {
+  let r = null
+
+  do {
+    r = Math.floor(Math.random() * words.length)
+  } while(usedWordsNums.includes(r) && usedWordsNums.length < words.length)
+
+
+  if(usedWordsNums.length < words.length) usedWordsNums.push(r)
+  return r
+}
 
 // ASYNC QUEUE
 
@@ -147,9 +160,7 @@ nodes.checkSpelling.form.onsubmit = e => {
   }
 }
 
-nodes.wordVariants.form.onsubmit = e => {
-  e.preventDefault()
-  
+function wordVariantsCheck() {
   getNode('.word-item.word-variants .check-indicator span:first-child').style.display = ''
   getNode('.word-item.word-variants .check-indicator span:last-child').style.display = ''
 
@@ -161,6 +172,15 @@ nodes.wordVariants.form.onsubmit = e => {
     getNode('.word-item.word-variants .check-indicator span:last-child').style.display = 'inline'
     nodes.memorizeQuality.value = 1
   }
+}
+
+nodes.wordVariants.form.onclick = e => {
+  if(e.target.name === 'word_radio' || e.target.for === 'word_radio') wordVariantsCheck()
+}
+
+nodes.wordVariants.form.onsubmit = e => {
+  e.preventDefault()
+  wordVariantsCheck()
 }
 
 nodes.saveNext.onclick = () => {
@@ -212,7 +232,7 @@ nodes.saveNext.onclick = () => {
         setTimeout(() => nodes.finishBlock.classList.remove('opacity0'), 1)
       }
       else {
-        setWord(words, curWordNum + 1)
+        setWord(words, ls_app_settings.randomizeWordSequence ? rndWord() : curWordNum + 1)
         nodes.mainBlock.classList.remove('opacity0')
         nodes.mainBlock.style.pointerEvents = '';
       }
@@ -252,10 +272,12 @@ function setWord(wordsArr, num) {
   rndNumsArr = []
 
   for(let i = 0; i < 4; i++) {
-    let rnd = Math.floor(Math.random() * wordsArr.length)
-    while(rndNumsArr.includes(rnd) && wordsArr.length > 3) {
+    let rnd = null
+
+    do {
       rnd = Math.floor(Math.random() * wordsArr.length)
-    }
+    } while(rndNumsArr.includes(rnd) && wordsArr.length > 3)
+
     rndNumsArr.push(rnd)
   }
 
