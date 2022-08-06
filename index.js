@@ -138,6 +138,7 @@ const nodes = {
   },
   memorizeQuality: getNode('input#memorize_quality'),
   saveNext: getNode('.save-next'),
+  nextInvokeDateIndicator: getNode('.next-invoke-date-indicator'),
   finishBlock: getNode('fieldset.finish-content')
 }
 
@@ -226,7 +227,7 @@ nodes.saveNext.onclick = () => {
   nodes.mainBlock.ontransitionend = () => {  
 
     if(nodes.mainBlock.classList.contains('opacity0')) {
-      if(curWordNum + 1 >= words.length) {
+      if(usedWordsNums.length >= words.length) {
         nodes.mainBlock.style.display = 'none'
         nodes.finishBlock.style.display = ''
         setTimeout(() => nodes.finishBlock.classList.remove('opacity0'), 1)
@@ -252,7 +253,7 @@ function setWord(wordsArr, num) {
     return
   }
 
-  nodes.mainBlock.querySelector('legend').innerHTML = 'Word - ' + (num+1) + '/' + ls_app_settings.wordsPerDay
+  nodes.mainBlock.querySelector('legend').innerHTML = 'Word - ' + (usedWordsNums.length) + '/' + ls_app_settings.wordsPerDay
 
   getNode('.word-variants-content').classList.remove('shown')
 
@@ -268,6 +269,7 @@ function setWord(wordsArr, num) {
   engToSw = Math.round(Math.random() * 2)
 
   nodes.word.innerText = curWord[engToSw ? 'eng' : 'title']
+  nodes.nextInvokeDateIndicator.innerText = curWord.nextInvokeDate.start.replace(/\..+/, '').replaceAll('-', '.').replace('T', ' ')
   
   rndNumsArr = []
 

@@ -43,3 +43,11 @@ body.shown-checks .chk-btn {display: unset}
 .memorize-quality .range-numbers p {width: 20px}
 
 .finish-content {transition: .5s}
+
+.word-content.word-card .final-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.word-content.word-card .final-block .next-invoke-date-indicator {font-size: .8rem}

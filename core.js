@@ -1,3 +1,17 @@
+// function add0(num) {
+//   return num > 9 ? num : '0' + num
+// }
+
+// function dateToStr(dateObj) {
+//   const dt = dateObj,
+//         [y, m, d, h, mn, s] = [
+//           dt.getFullYear(), add0(dt.getMonth() + 1), dt.getDate(),
+//           add0(dt.getHours()), add0(dt.getMinutes()), add0(dt.getSeconds())
+//         ]
+
+//   return [y, m, d].join('.') + ' ' + [h, mn, s].join(':')  
+// }
+
 function getNode(selector) {
   return document.querySelector(selector)
 }
