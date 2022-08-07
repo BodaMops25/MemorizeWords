@@ -17,7 +17,8 @@ const nodes = {
     wordsPerDay: getNode('input#wordsPerDay'),
     startCachedWords: getNode('input#startCachedWords'),
     showCheckButtons: getNode('input#showCheckButtons'),
-    randomizeWordSequence: getNode('input#randomizeWordSequence')
+    randomizeWordSequence: getNode('input#randomizeWordSequence'),
+    separatingWordsByComma: getNode('input#separatingWordsByComma')
   },
   save_button: getNode('button.default-button.save')
 }

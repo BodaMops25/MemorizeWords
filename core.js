@@ -12,6 +12,10 @@
 //   return [y, m, d].join('.') + ' ' + [h, mn, s].join(':')  
 // }
 
+function fullTrim(str) {
+  return str.toLowerCase().replace(/[()]/g, '').trim().replace(/ +/g, ' ').replaceAll(', ', ',')
+}
+
 function getNode(selector) {
   return document.querySelector(selector)
 }
@@ -28,6 +32,7 @@ if(!ls_app_settings.wordsPerDay && +ls_app_settings.wordsPerDay !== 0) ls_app_se
 if(!ls_app_settings.startCachedWords && +ls_app_settings.startCachedWords !== 0) ls_app_settings.startCachedWords = 5
 if(!ls_app_settings.showCheckButtons && +ls_app_settings.showCheckButtons !== 0) ls_app_settings.showCheckButtons = 0
 if(!ls_app_settings.randomizeWordSequence && +ls_app_settings.randomizeWordSequence !== 0) ls_app_settings.randomizeWordSequence = 1
+if(!ls_app_settings.separatingWordsByComma && +ls_app_settings.separatingWordsByComma !== 0) ls_app_settings.separatingWordsByComma = 1
 
 localStorage.setItem('access-data', JSON.stringify(ls_access_data))
 localStorage.setItem('reminder-time', JSON.stringify(ls_reminder_time))

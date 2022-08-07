@@ -144,14 +144,24 @@ const nodes = {
 
 nodes.checkSpelling.form.onsubmit = e => {
   e.preventDefault()
-  const inWord = nodes.checkSpelling.input.value.toLowerCase(),
-        controlWord = curWord[engToSw ? 'title' : 'eng'].toLowerCase()
+  const inWord = fullTrim(nodes.checkSpelling.input.value),
+        controlWord = fullTrim(curWord[engToSw ? 'title' : 'eng'])
+        .replace(/^en /g, '').replace(/, en /g, ',')
+        .replace(/^ett /g, '').replace(/, ett /g, ',')
 
   nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = ''
   nodes.checkSpelling.form.querySelector('.check-indicator > span:last-child').style.display = ''
 
+  let condition = null
+
+  if(!ls_app_settings.separatingWordsByComma) condition = controlWord === inWord
+  else {
+    const s_cW = controlWord.split(', ')
+    condition = inWord.split(',').reduce((c, itm) => s_cW.includes(itm) ? 1 : c, 0)
+  }
+
   // NEED MAKE NORMAL FUNCTION OF EQUALATION WORDS
-  if(controlWord.replace('en ', '').replace('ett ', '') === inWord) {
+  if(condition) {
     nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = 'inline'
     nodes.memorizeQuality.value = 3
   }
