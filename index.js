@@ -136,39 +136,52 @@ const nodes = {
       }
     })
   },
+  rightCheckSpelling: {
+    form: getNode('form.word-item.right-check-spelling'),
+    input: getNode('input#right_check_spelling')
+  },
   memorizeQuality: getNode('input#memorize_quality'),
   saveNext: getNode('.save-next'),
   nextInvokeDateIndicator: getNode('.next-invoke-date-indicator'),
   finishBlock: getNode('fieldset.finish-content')
 }
 
-nodes.checkSpelling.form.onsubmit = e => {
-  e.preventDefault()
-  const inWord = fullTrim(nodes.checkSpelling.input.value),
+let submitedSpelling = 0
+
+function checkSpellingCheck({form, input}) {
+  const inWord = fullTrim(input.value),
         controlWord = fullTrim(curWord[engToSw ? 'title' : 'eng'])
         .replace(/^en /g, '').replace(/, en /g, ',')
         .replace(/^ett /g, '').replace(/, ett /g, ',')
 
-  nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = ''
-  nodes.checkSpelling.form.querySelector('.check-indicator > span:last-child').style.display = ''
+  form.querySelector('.check-indicator > span:first-child').style.display = ''
+  form.querySelector('.check-indicator > span:last-child').style.display = ''
 
   let condition = null
 
   if(!ls_app_settings.separatingWordsByComma) condition = controlWord === inWord
   else {
-    const s_cW = controlWord.split(', ')
+    const s_cW = controlWord.split(',')
     condition = inWord.split(',').reduce((c, itm) => s_cW.includes(itm) ? 1 : c, 0)
   }
 
-  // NEED MAKE NORMAL FUNCTION OF EQUALATION WORDS
-  if(condition) {
+  return condition
+}
+
+nodes.checkSpelling.form.onsubmit = e => {
+  e.preventDefault()
+  if(checkSpellingCheck(nodes.checkSpelling)) {
     nodes.checkSpelling.form.querySelector('.check-indicator > span:first-child').style.display = 'inline'
     nodes.memorizeQuality.value = 3
+    submitedSpelling += 1
   }
   else {
     nodes.checkSpelling.form.querySelector('.check-indicator > span:last-child').style.display = 'inline'
     nodes.memorizeQuality.value = 2
+    submitedSpelling = 0
   }
+
+  if(submitedSpelling > 1) nodes.saveNext.click()
 }
 
 function wordVariantsCheck() {
@@ -192,6 +205,18 @@ nodes.wordVariants.form.onclick = e => {
 nodes.wordVariants.form.onsubmit = e => {
   e.preventDefault()
   wordVariantsCheck()
+}
+
+nodes.rightCheckSpelling.form.onsubmit = e => {
+  e.preventDefault()
+
+  if(checkSpellingCheck(nodes.rightCheckSpelling)) {
+    nodes.rightCheckSpelling.form.querySelector('.check-indicator > span:first-child').style.display = 'inline'
+    nodes.saveNext.click()
+  }
+  else {
+    nodes.rightCheckSpelling.form.querySelector('.check-indicator > span:last-child').style.display = 'inline'
+  }
 }
 
 nodes.saveNext.onclick = () => {
@@ -279,7 +304,7 @@ function setWord(wordsArr, num) {
   engToSw = Math.round(Math.random() * 2)
 
   nodes.word.innerText = curWord[engToSw ? 'eng' : 'title']
-  nodes.nextInvokeDateIndicator.innerText = curWord.nextInvokeDate.start.replace(/\..+/, '').replaceAll('-', '.').replace('T', ' ')
+  nodes.nextInvokeDateIndicator.innerText = curWord.nextInvokeDate.start.replace(/\..+/, '').replaceAll('-','.').replace('T',' ')
   
   rndNumsArr = []
 
