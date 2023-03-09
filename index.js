@@ -40,6 +40,13 @@ async function getItems(amount, cursor) {
   return r.next_cursor && amount > 100 ? r.results.concat(await getItems(amount - 100, r.next_cursor)) : r.results
 }
 
+async function fun1() {
+      return fetch('https://api.notion.com/v1/databases/' + databaseId, {
+          method: 'GET',
+          headers: NF_headers
+      })
+}
+
 let curWord = null,
     curWordNum = 0,
     engToSw = 0
