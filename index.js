@@ -47,8 +47,6 @@ async function fun1() {
       })
 }
 
-document.querySelector('#fetch_test_btn').addEventListener('click', fun1)
-
 let curWord = null,
     curWordNum = 0,
     engToSw = 0
